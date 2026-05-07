@@ -3,108 +3,598 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Webpage Title (will show on tab) -->
-    <title>Professional Portfolio</title>
+    <title>Alvin Ly — Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        /* Basic styling for the page */
+        :root {
+            --bg: #0a0a0f;
+            --surface: #13131a;
+            --border: #1e1e2e;
+            --accent: #4f8ef7;
+            --accent2: #7c3aed;
+            --text: #e8e8f0;
+            --muted: #6b6b80;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
         }
+
+        /* NOISE TEXTURE OVERLAY */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0.4;
+        }
+
+        /* HEADER */
         header {
-            background: #333;
-            color: #fff;
-            padding: 1rem 0;
-            text-align: center;
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 1.2rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 15, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
         }
-        nav {
-            margin: 1rem 0;
+
+        .logo {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 1.2rem;
+            letter-spacing: -0.02em;
+            color: var(--text);
         }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        nav { display: flex; gap: 2rem; }
+
         nav a {
-            color: #fff;
+            color: var(--muted);
             text-decoration: none;
-            margin: 0 1rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            transition: color 0.2s;
         }
+
+        nav a:hover { color: var(--text); }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 3rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(79, 142, 247, 0.12) 0%, transparent 70%);
+            top: 50%;
+            right: -100px;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        .hero-glow2 {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.08) 0%, transparent 70%);
+            bottom: 100px;
+            left: 200px;
+            pointer-events: none;
+        }
+
+        .hero-content { max-width: 700px; }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(79, 142, 247, 0.1);
+            border: 1px solid rgba(79, 142, 247, 0.25);
+            color: var(--accent);
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.4rem 1rem;
+            border-radius: 100px;
+            margin-bottom: 2rem;
+            animation: fadeUp 0.6s ease both;
+        }
+
+        .hero-tag::before {
+            content: '';
+            width: 6px; height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .hero h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            font-weight: 800;
+            line-height: 1.0;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+            animation: fadeUp 0.6s 0.1s ease both;
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--muted);
+            line-height: 1.7;
+            max-width: 520px;
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+            animation: fadeUp 0.6s 0.2s ease both;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            animation: fadeUp 0.6s 0.3s ease both;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.8rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #3a7de8;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(79, 142, 247, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* SECTIONS */
         section {
-            padding: 2rem;
-            border-bottom: 1px solid #ddd;
+            padding: 5rem 3rem;
+            max-width: 1100px;
+            margin: 0 auto;
         }
+
+        .section-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+        }
+
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .section-sub {
+            color: var(--muted);
+            font-size: 1rem;
+            line-height: 1.7;
+            max-width: 540px;
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+
+        /* ABOUT */
+        #about {
+            border-top: 1px solid var(--border);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .about-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.8rem;
+            transition: border-color 0.2s;
+        }
+
+        .about-card:hover { border-color: rgba(79, 142, 247, 0.3); }
+
+        .about-card h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+        }
+
+        .about-card p {
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        /* PROJECTS */
+        #projects { border-top: 1px solid var(--border); }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.25s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            opacity: 0;
+            transition: opacity 0.25s;
+        }
+
+        .project-card:hover {
+            border-color: rgba(79, 142, 247, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-card:hover::before { opacity: 1; }
+
+        .project-icon {
+            width: 44px; height: 44px;
+            background: rgba(79, 142, 247, 0.1);
+            border: 1px solid rgba(79, 142, 247, 0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .project-card h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.01em;
+        }
+
+        .project-card p {
+            color: var(--muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tag {
+            background: rgba(79, 142, 247, 0.08);
+            border: 1px solid rgba(79, 142, 247, 0.15);
+            color: var(--accent);
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 0.25rem 0.75rem;
+            border-radius: 100px;
+            letter-spacing: 0.03em;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: gap 0.2s;
+        }
+
+        .project-link:hover { gap: 0.7rem; }
+
+        /* CREDENTIALS */
+        #credentials { border-top: 1px solid var(--border); }
+
+        .credentials-note {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            color: var(--muted);
+            font-size: 0.95rem;
+            font-style: italic;
+        }
+
+        /* CONTACT */
+        #contact { border-top: 1px solid var(--border); }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .contact-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-decoration: none;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.2s;
+        }
+
+        .contact-card:hover {
+            border-color: rgba(79, 142, 247, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .contact-icon {
+            width: 40px; height: 40px;
+            background: rgba(79, 142, 247, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .contact-info span {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 0.2rem;
+        }
+
+        .contact-info strong {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* FOOTER */
         footer {
             text-align: center;
-            padding: 1rem;
-            background: #333;
-            color: #fff;
+            padding: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 1rem 1.5rem; }
+            .hero { padding: 7rem 1.5rem 3rem; }
+            section { padding: 4rem 1.5rem; }
+            .about-grid { grid-template-columns: 1fr; }
+            nav { gap: 1rem; }
         }
     </style>
 </head>
 <body>
-    <!-- Header Section -->
+
     <header>
-        <h1>Welcome to My Portfolio</h1>
+        <div class="logo">Alvin<span>.</span>Ly</div>
         <nav>
-            <a href="#about">About Me</a>
+            <a href="#about">About</a>
             <a href="#projects">Projects</a>
             <a href="#credentials">Credentials</a>
-            <a href="#contact">Contact Info</a>
+            <a href="#contact">Contact</a>
         </nav>
     </header>
 
-    <!-- About Me Section -->
+    <!-- HERO -->
+    <div class="hero">
+        <div class="hero-glow"></div>
+        <div class="hero-glow2"></div>
+        <div class="hero-content">
+            <div class="hero-tag">Open to opportunities</div>
+            <h1>Hi, I'm <span class="highlight">Alvin Ly</span></h1>
+            <p>A student passionate about finance and computer science — building projects at the intersection of technology and business.</p>
+            <div class="hero-btns">
+                <a href="#projects" class="btn btn-primary">View Projects →</a>
+                <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ABOUT -->
     <section id="about">
-        <h2>About Me</h2>
-        <p>
-            <!-- Add a brief introduction about yourself here -->
-            Hello! My name is [Your Name]. I am passionate about [your interests or profession]. 
-            Welcome to my portfolio website!
-        </p>
+        <div class="section-label">About Me</div>
+        <h2 class="section-title">Who I Am</h2>
+        <p class="section-sub">I'm a high school student with a passion for finance, computer science, and building things that work. I play varsity badminton and I'm always looking for new challenges.</p>
+        <div class="about-grid">
+            <div class="about-card">
+                <h3>💻 Computer Science</h3>
+                <p>Currently enrolled in AP Computer Science A, working with Java, object-oriented programming, data structures, and building real projects from scratch.</p>
+            </div>
+            <div class="about-card">
+                <h3>📈 Finance & Business</h3>
+                <p>Interested in financial management and entrepreneurship. I run a digital products business and am always learning about markets, investing, and building sustainable ventures.</p>
+            </div>
+            <div class="about-card">
+                <h3>🏸 Varsity Badminton</h3>
+                <p>Varsity badminton player since freshman year. Competing at a high level has taught me discipline, focus under pressure, and how to work as part of a team.</p>
+            </div>
+            <div class="about-card">
+                <h3>🎓 Dual Enrollment</h3>
+                <p>Taking college-level coursework through Mesa College while still in high school, building an early foundation for my future academic and professional career.</p>
+            </div>
+        </div>
     </section>
 
-    <!-- Projects Section -->
+    <!-- PROJECTS -->
     <section id="projects">
-        <h2>Projects</h2>
-        <p>
-            <!-- Add a list or description of your projects here -->
-            Here are some of the projects I have worked on:
-        </p>
-        <ul>
-            <li>Project 1: [Brief description] <a href="[link to project repository]" target="_blank">[Project repository]</a></li>
-            <li>Project 2: [Brief description] <a href="[link to project repository]" target="_blank">[Project repository]</a></li>
-        </ul>
+        <div class="section-label">Projects</div>
+        <h2 class="section-title">What I've Built</h2>
+        <p class="section-sub">A selection of projects I've worked on — from software to design.</p>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-icon">⚓</div>
+                <h3>Battleship — Java Game</h3>
+                <p>A fully playable Battleship game built in Java using object-oriented programming. Features 6 interacting classes, a 10x10 2D array game board, inheritance, encapsulation, a stats tracker, and a computer opponent.</p>
+                <div class="project-tags">
+                    <span class="tag">Java</span>
+                    <span class="tag">OOP</span>
+                    <span class="tag">2D Arrays</span>
+                    <span class="tag">Inheritance</span>
+                </div>
+                <a href="https://github.com/phAPCSAperiod2/final-project-alvinly26" target="_blank" class="project-link">View on GitHub →</a>
+            </div>
+            <div class="project-card">
+                <div class="project-icon">🏗️</div>
+                <h3>Revit Architecture Models</h3>
+                <p>3D architectural models and building designs created in Autodesk Revit. More details coming soon.</p>
+                <div class="project-tags">
+                    <span class="tag">Revit</span>
+                    <span class="tag">Architecture</span>
+                    <span class="tag">3D Design</span>
+                </div>
+                <span class="project-link" style="color: var(--muted); cursor: default;">Coming Soon</span>
+            </div>
+        </div>
     </section>
 
-    <!-- Credentials Section -->
+    <!-- CREDENTIALS -->
     <section id="credentials">
-        <h2>Credentials</h2>
-        <p>
-            <!-- Add your credentials, certifications, or achievements here -->
-            I have earned the following certifications and achievements:
-        </p>
-        <ul>
-            <li>Certification 1: [Details]</li>
-            <li>Certification 2: [Details]</li>
-            <li>Certification 3: [Details]</li>
-            <!-- Add images of your certification digital badges -->
-        </ul>
+        <div class="section-label">Credentials</div>
+        <h2 class="section-title">Certifications & Achievements</h2>
+        <div class="credentials-note">
+            Credentials and certifications will be added here soon.
+        </div>
     </section>
 
-    <!-- Contact Info Section -->
+    <!-- CONTACT -->
     <section id="contact">
-        <h2>Contact Info</h2>
-        <p>
-            <!-- Add your contact information here -->
-            Feel free to reach out to me:
-        </p>
-        <ul>
-            <li>Email: [your-email@example.com]</li>
-            <li>LinkedIn: <a href="[your-linkedin-profile]" target="_blank">[Your LinkedIn]</a></li>
-        </ul>
+        <div class="section-label">Contact</div>
+        <h2 class="section-title">Get in Touch</h2>
+        <p class="section-sub">Feel free to reach out — I'm always open to new opportunities and conversations.</p>
+        <div class="contact-grid">
+            <a href="mailto:alvinly26@gmail.com" class="contact-card">
+                <div class="contact-icon">✉️</div>
+                <div class="contact-info">
+                    <span>Email</span>
+                    <strong>alvinly26@gmail.com</strong>
+                </div>
+            </a>
+            <a href="https://www.linkedin.com/in/alvin-ly-734a61375/" target="_blank" class="contact-card">
+                <div class="contact-icon">💼</div>
+                <div class="contact-info">
+                    <span>LinkedIn</span>
+                    <strong>Alvin Ly</strong>
+                </div>
+            </a>
+            <a href="https://github.com/phAPCSAperiod2/final-project-alvinly26" target="_blank" class="contact-card">
+                <div class="contact-icon">🐙</div>
+                <div class="contact-info">
+                    <span>GitHub</span>
+                    <strong>alvinly26</strong>
+                </div>
+            </a>
+        </div>
     </section>
 
-    <!-- Footer Section -->
     <footer>
-        <p>&copy; 2025 [Your Name]. All rights reserved.</p>
+        <p>&copy; 2026 Alvin Ly. All rights reserved.</p>
     </footer>
+
 </body>
 </html>
